@@ -14,6 +14,11 @@ public class DemoController {
         return "git demo !!!!";
     }
 
+    @GetMapping
+    public String message1(){
+
+        return "git demo !!!!";
+    }
 
 
 }
