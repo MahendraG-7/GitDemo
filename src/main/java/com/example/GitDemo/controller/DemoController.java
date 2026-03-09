@@ -10,6 +10,7 @@ public class DemoController {
 
     @GetMapping
     public String message(){
+        System.out.println("feature 2 added");
         return "git demo !!!!";
     }
 
