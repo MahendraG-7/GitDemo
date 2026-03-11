@@ -6,6 +6,7 @@ import com.example.GitDemo.entity.User;
 import com.example.GitDemo.exception.InvalidUserAgeException;
 import com.example.GitDemo.exception.ResourceNotFoundException;
 import com.example.GitDemo.exception.UserAlreadyExistsException;
+import com.example.GitDemo.mapper.UserMapper;
 import com.example.GitDemo.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,8 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private final UserRepository repo;
+
+    private final UserMapper userMapper;
 
 
     @Override
@@ -80,7 +83,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserResponseDTO patchUser(Integer id, UserRequestDTO dto) {
-        return null;
+        User user = repo.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("user not found with id :" + id));
+        System.out.println("User before save: " + user);
+        userMapper.updateUserFromDto(dto,user);
+        User savedUser = repo.save(user);
+        System.out.println("User after save: " + savedUser);
+        return userMapper.toResponseDto(savedUser);
     }
 
     @Override

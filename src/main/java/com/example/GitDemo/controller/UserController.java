@@ -63,5 +63,12 @@ public class UserController {
         return ResponseEntity.ok("User deleted successfully");
     }
 
+    @PatchMapping("/patch/{id}")
+    public ResponseEntity<UserResponseDTO> parcialUpdate(@PathVariable Integer id,
+                                                         @RequestBody UserRequestDTO dto){
+        UserResponseDTO userResponseDTO = userService.patchUser(id, dto);
+        return ResponseEntity.ok(userResponseDTO);
+    }
+
 
 }
